@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Reels 下載器" />
+    <meta name="theme-color" content="#0f0f12" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <title>Reels 下載器</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="offline-banner" class="offline-banner hidden">
+      目前離線。App 介面可正常使用，但下載 Reel 需要網路連線。
+    </div>
+
+    <div class="page">
+      <header class="hero">
+        <div class="logo" aria-hidden="true">▶</div>
+        <h1>Reels 下載器</h1>
+        <p class="subtitle">貼上 Instagram Reel 連結，免費下載影片</p>
+      </header>
+
+      <main class="card">
+        <label class="label" for="url-input">Reel 連結</label>
+        <div class="input-row">
+          <textarea
+            id="url-input"
+            rows="3"
+            placeholder="https://www.instagram.com/reel/..."
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+          ></textarea>
+          <button id="paste-btn" class="btn-secondary" type="button">
+            貼上
+          </button>
+        </div>
+
+        <button id="download-btn" class="btn-primary" type="button" disabled>
+          解析並下載
+        </button>
+
+        <div id="status" class="status hidden" role="status" aria-live="polite"></div>
+
+        <div id="preview" class="preview hidden">
+          <img id="thumbnail" alt="Reel 預覽" />
+          <div class="preview-meta">
+            <p id="preview-user" class="preview-user"></p>
+            <p id="preview-caption" class="preview-caption"></p>
+          </div>
+        </div>
+
+        <a id="save-link" class="btn-save hidden" download="reel.mp4">
+          儲存影片
+        </a>
+      </main>
+
+      <section class="guide card">
+        <h2>加到主畫面（像 App 一樣）</h2>
+        <ol>
+          <li>用 <strong>Safari</strong> 開啟此網站（Chrome 無法加入主畫面）</li>
+          <li>點下方 <strong>分享</strong> 按鈕 □↑</li>
+          <li>選 <strong>加入主畫面</strong></li>
+          <li>之後從主畫面圖示開啟，不需重新輸入網址</li>
+        </ol>
+        <p class="guide-note">
+          離線時可開啟 App，但下載功能需要連上網路（Reel 影片來自 Instagram 伺服器）。
+        </p>
+      </section>
+
+      <section class="guide card">
+        <h2>iPhone 存到相簿</h2>
+        <ol>
+          <li>在 Instagram 複製 Reel 連結，回到此頁貼上</li>
+          <li>點「解析並下載」，完成後點「儲存影片」</li>
+          <li>影片下載後，點分享 → <strong>儲存影片</strong> 即可存入相簿</li>
+          <li>或先存到「檔案」App，再從檔案分享至相簿</li>
+        </ol>
+      </section>
+
+      <footer class="footer">
+        <p>僅供個人備份已授權內容，請尊重創作者著作權。</p>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
