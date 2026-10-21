@@ -4,20 +4,32 @@ import downloadHandler from "./api/download.js";
 
 function createRes(res) {
   return {
+    get headersSent() {
+      return res.headersSent;
+    },
     status(code) {
       res.statusCode = code;
-      return {
-        json(data) {
-          res.setHeader("Content-Type", "application/json");
-          res.end(JSON.stringify(data));
-        },
-        send(data) {
-          res.end(data);
-        },
-        end() {
-          res.end();
-        },
-      };
+      return this;
+    },
+    json(data) {
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify(data));
+    },
+    send(data) {
+      res.end(data);
+    },
+    end(data) {
+      res.end(data);
+    },
+    write(data) {
+      return res.write(data);
+    },
+    once(event, listener) {
+      res.once(event, listener);
+      return this;
+    },
+    destroy(error) {
+      res.destroy(error);
     },
     setHeader(key, value) {
       res.setHeader(key, value);
@@ -43,6 +55,8 @@ const server = http.createServer(async (req, res) => {
     method: req.method,
     body: await readBody(req),
     query: Object.fromEntries(url.searchParams),
+    headers: req.headers,
+    socket: req.socket,
   };
   const mockRes = createRes(res);
 
@@ -64,6 +78,6 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(3001, () => {
+server.listen(3001, process.env.REELS_API_HOST || "127.0.0.1", () => {
   console.log("API dev server running at http://127.0.0.1:3001");
 });

@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  // 給 Dashboard 8765 子路徑靜態託管用（相對資產路徑）
+  base: "./",
   plugins: [
     VitePWA({
       registerType: "autoUpdate",
@@ -14,8 +16,8 @@ export default defineConfig({
         background_color: "#0f0f12",
         display: "standalone",
         orientation: "portrait",
-        scope: "/",
-        start_url: "/",
+        scope: "./",
+        start_url: "./",
         lang: "zh-Hant",
         icons: [
           {
@@ -34,8 +36,13 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,svg,woff2}"],
-        navigateFallback: "/index.html",
+        navigateFallback: "index.html",
+        navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
+          {
+            urlPattern: /\/api\//,
+            handler: "NetworkOnly",
+          },
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: "CacheFirst",
@@ -47,11 +54,12 @@ export default defineConfig({
         ],
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
       },
     }),
   ],
   server: {
+    host: "127.0.0.1",
     proxy: {
       "/api": {
         target: "http://127.0.0.1:3001",
